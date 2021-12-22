@@ -21,11 +21,36 @@ const createTodosStore = () => {
         await fetchTodos();
     }
 
+    const changeTodo = async (todo) => {
+        await fetch(address + todo.id, {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+                "id": todo.id
+            },
+            body: JSON.stringify(todo)
+        });
+        await fetchTodos();
+    }
+
+    const deleteTodo = async (id) => {
+        await fetch(address + id, {
+            method: "DELETE",
+            headers: {
+                "content-type": "application/json",
+                "id": id
+            }
+        });
+        await fetchTodos();
+    }
+
     fetchTodos();
     return {
         subscribe,
         fetchTodos,
         addTodo,
+        deleteTodo,
+        changeTodo,
     }
 }
 
